@@ -1,3 +1,3 @@
-graphique <- function(var1, var2){
+graphique <- function(var1, var2) {
 
 }
