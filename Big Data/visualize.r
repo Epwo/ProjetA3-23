@@ -12,7 +12,7 @@ graphique_camenbert <- function(var1, var2) {
 
 #Nombre d’accidents par ville
 graphique_bar_empilees <- function(var1, var2) { 
-    ggplot(data = votre_data_frame, aes(x = variable_x, y = variable_y)) +
+    ggplot2(data = votre_data_frame, aes(x = variable_x, y = variable_y)) +
   geom_point()
 }
 
