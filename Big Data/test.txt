@@ -1,1 +1,6 @@
+<<<<<<< HEAD
 changement de mess
+=======
+alors  ?
+coucou mathieu !
+>>>>>>> 13b339224efc555d43036002efa642dad8bb2409
