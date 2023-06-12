@@ -1,5 +1,10 @@
 data <- read.csv("Big Data\\csvSource.csv",sep=";")
 #On cherche a retrouver les lignes = 'rows' qui sont vides is.na()
-str(data)
-#il semblerait qu'il n'y ait aucune valeurs manquantes
+missing_rows <- apply(data, 1, function(row) any(row = 'null'))
 
+
+sousDF <- subset(data,descr_athmo == "Neige – grêle")
+sousDF
+
+#dh <- data[data$descr_athmo == "Neige – grêle",]
+#dh
