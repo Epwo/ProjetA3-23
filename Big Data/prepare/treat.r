@@ -5,6 +5,10 @@ missing_rows <- apply(data, 1, function(row) any(row = 'null'))
 print(nrow(data))
 sousDF <- subset(data, data$place == "NULL")
 print(nrow(sousDF))
+#en lisant la documentation sur le site data.gouv, on apprend que les piétons sont a l'emplacement 10 (donc il faut remplacer les 'NULL' par 10)
+sousDF$place <- 10
 
+finalData <- data
 
-sousDF
+finalData[finalData$place == "NULL", ] <- sousDF
+print(nrow(finalData))
