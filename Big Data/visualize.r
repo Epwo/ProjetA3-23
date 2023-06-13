@@ -5,16 +5,24 @@ library(ggplot2)
 #Nombre d’accidents selon la gravite
 
 graphique_bar <- function(var1, var2) {
-    barplot(var2, col = "#668FB7", xlab="Titre de l'axe des x",
-        ylab="Titre de l'axe des y")
-    title(main =" Nombre d’accidents en fonction de/des", 
-        sub = "Sous-titre",
-        xlab = "Axe des x", ylab = "Axe des y",
-      cex.main = 2,   font.main= 4, col.main= "red",
-      cex.sub = 0.75, font.sub = 3, col.sub = "green",
-      col.lab ="darkblue"
-      )
+    deux_colonnes <- dataframe1[, c(var1, var2)]
+    bar_plot <- ggplot(deux_colonnes, aes(x = dataframe1[[var1]], y = dataframe1[[var2]])) + # nolint: line_length_linter.
+    geom_bar(stat = "identity", fill = "#2e6694") +
+    labs(x = var1, y = var2, title = paste("Nombre d'accidents en fonction de", var2)) + # nolint: line_length_linter.
+    theme_minimal() + theme(
+    axis.title.x = element_text(size = 25, face = "bold"),
+    axis.title.y = element_text(size = 25, face = "bold"),
+    panel.grid.major = element_line(
+            colour = "dodgerblue",
+            size = 0.5, linetype = "dotdash"
+        ),
+    axis.text = element_text(
+            size = 25, face = "bold"
+        ),
+     plot.title = element_text(colour = "red", face = "bold", size = 25, hjust = 0.5),
+    )
 
+    print(bar_plot)
 }
 
 graphique_camenbert <- function(var1, var2) {
@@ -39,12 +47,10 @@ histograme <- function(var1, var2) {
 }
 
 
-categorie <- c("A", "B", "C", "D", "C")
-valeur1 <- c(10, 20, 15, 5, 3)
+categorie <- c("A", "B", "C", "D", "C", "A")
+valeur1 <- c(10, 20, 15, 5, 3,1)
 valeur2 <- c(5, 15, 10, 20)
-
-
 
 dataframe1 <- data.frame(categorie = categorie, taille = valeur1)
 
-graphique_bar(dataframe1["categorie"], dataframe1$taille)
+graphique_bar("categorie", "taille")
