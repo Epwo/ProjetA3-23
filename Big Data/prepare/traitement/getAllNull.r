@@ -21,6 +21,29 @@ printQuartier <- function() {
     write.csv(sousDF,"Big Data\\tempcsv.csv",row.names=FALSE)
 }
 
-printQuartier()
+AnormalValuesGeo <- function(){
+     #check if point is outside france métropolitaine
+     #j'ai choisi un carré de coords arbitraire
+    squareFR <- matrix(c(39.732580, -10.058320,
+                    40.295298, 10.602378,
+                    51.944631, 10.337874,
+                    50.900084, -7.060609),
+                    ncol = 2,
+                    byrow = TRUE)
 
+    # Print the matrix
+    print(squareFR)
+}
 
+for (i in seq_along(sousDF$ville)) {
+        #on definit ville comme nom de la ville
+    ville <- sousDF$ville[i]
+    if(!(isInsideFRsquare(sousDF$latitude[i],sousDF$longitude[i]))){
+        print(ville)
+    }
+}
+
+inside <- isInsideFRsquare(latitude, longitude)
+print(inside)
+
+AnormalValuesGeo()
