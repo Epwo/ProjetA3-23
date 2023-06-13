@@ -24,8 +24,7 @@ graphique_camenbert <- function(dataframe, var1, var2) {
 }
 
 #Nombre d’accidents par ville
-graphique_carte <- function(var1, var2) {
-    ggplot()
+graphique_carte <- function(var1, var2){
 }
 
 
@@ -34,14 +33,11 @@ graphique_carte <- function(var1, var2) {
 #Nombre d’accidents par tranches d’heure
 
 histogramme <- function(var1, var2) {
-     deux_colonnes <- dataframe1[, c(var1, var2)]
-    hist <- ggplot(deux_colonnes, aes(x = dataframe1[[var2]])) + # nolint: line_length_linter.
-        geom_histogram(binwidth=1)
-    print(hist)
+     
 }
 
 
-data <- read.csv2("Big Data/csvOutput.csv", sep = ",")
+data <- read.csv("Big Data/csvOutput.csv", sep = ",")
 
 #Nombre d’accidents en fonction des conditions atmosphériques
 #graphique_bar(data, "descr_athmo")
