@@ -4,9 +4,9 @@ library(ggplot2)
 #Nombre d’accidents en fonction de la description de la surface
 #Nombre d’accidents selon la gravite
 
-graphique_bar <- function(var1, var2) {
-    deux_colonnes <- dataframe1[, c(var1, var2)]
-    bar_plot <- ggplot(deux_colonnes, aes(x = dataframe1[[var1]], y = dataframe1[[var2]])) + # nolint: line_length_linter.
+graphique_bar <- function(dataframe, var1, var2) {
+    deux_colonnes <- dataframe[, c(var1, var2)]
+    bar_plot <- ggplot(deux_colonnes, aes(x = dataframe[[var1]], y = dataframe[[var2]])) + # nolint: line_length_linter.
         geom_bar(stat = "identity", fill = "#2e6694") +
         labs(x = var1, y = var2, title = paste("Nombre d'accidents en fonction de", var2)) + # nolint: line_length_linter.
         theme_minimal() +
@@ -48,11 +48,12 @@ histogramme <- function(var1, var2) {
 }
 
 
-categorie <- c("A", "B", "C", "D", "C", "A")
+data <- read.csv("Big Data\\csvSource.csv", sep = ";")
+'''categorie <- c("A", "B", "C", "D", "C", "A")
 valeur1 <- c(10, 20, 15, 5, 3, 1)
 valeur2 <- c(5, 15, 10, 20)
 
-dataframe1 <- data.frame(categorie = categorie, taille = valeur1)
+dataframe1 <- data.frame(categorie = categorie, taille = valeur1)'''
 
-#graphique_bar("categorie", "taille")
-histogramme("categorie", "taille")
+graphique_bar(data, "categorie", "taille")
+#histogramme("categorie", "taille")
