@@ -14,4 +14,4 @@ print(nrow(finalData))
 finalData <- TreatAgeAnnNaiss(finalData,finalData)
 print(nrow(finalData))
 
-write.csv(finalData,"Big Data\\csvOutput.csv",row.names=FALSE)
+write.csv(finalData,"Big Data\\csvOutTrait.csv",row.names=FALSE)
