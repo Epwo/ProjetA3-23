@@ -1,5 +1,6 @@
 TreatLongLat <- function(dataInput, finalData) {
     source("Big Data\\prepare\\traitement\\quartierData.r")
+    source("Big Data\\prepare\\traitement\\isInside.r")
   # Create a new data frame where dataInput$ville starts with "PARIS"
     sousDF <- dataInput
 
@@ -7,6 +8,8 @@ TreatLongLat <- function(dataInput, finalData) {
     # Replace latitude and longitude values in sousDF
     #on se balade dans tt les valeurs du tableau
     for (i in seq_along(sousDF$ville)) {
+         #on definit ville comme nom de la ville
+        ville <- sousDF$ville[i]
         #on definit ville comme nom de la ville
         ville <- sousDF$ville[i]
         if(startsWith(ville,"PARIS")){

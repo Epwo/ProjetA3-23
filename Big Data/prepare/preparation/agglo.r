@@ -4,8 +4,8 @@ Agglo2Num <- function(dataInput, finalData) {
     aggloDict <- list("En agglomération" = 1, "Hors agglomération" = 0)
 
     for (i in seq_along(dataInput$descr_agglo)) {
-        current_value <- finalData$descr_agglo[i]
-        finalData$descr_agglo[i] <- aggloDict[[current_value]]
+        current_value <- dataInput$descr_agglo[i]
+        dataInput$descr_agglo[i] <- aggloDict[[current_value]]
     }
-   return(finalData)
+   return(dataInput)
 }
