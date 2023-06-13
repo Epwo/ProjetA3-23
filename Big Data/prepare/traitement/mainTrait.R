@@ -6,9 +6,12 @@ source("Big Data\\prepare\\traitement\\age-Naiss.r")
 data <- read.csv("Big Data\\csvSource.csv",sep=";")
 #init finaldata
 finalData <- data
-#on affecte les val corrigées de place
+print(nrow(finalData))
 finalData <- TreatPlace(data,finalData)
-finalData <- TreatLongLat(data,finalData)
-finalData <- TreatAgeAnnNaiss(data,finalData)
+print(nrow(finalData))
+finalData <- TreatLongLat(finalData,finalData)
+print(nrow(finalData))
+finalData <- TreatAgeAnnNaiss(finalData,finalData)
+print(nrow(finalData))
 
 write.csv(finalData,"Big Data\\csvOutput.csv",row.names=FALSE)
