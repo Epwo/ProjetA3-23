@@ -23,9 +23,6 @@ graphique_camenbert <- function(dataframe, var1, var2) {
     print(pie)
 }
 
-#Nombre d’accidents par ville
-graphique_carte <- function(var1, var2){
-}
 
 
 #Quantité d’accidents en fonction des tranches d’âges
