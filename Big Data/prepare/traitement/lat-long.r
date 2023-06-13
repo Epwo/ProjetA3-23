@@ -13,8 +13,8 @@ TreatLongLat <- function(dataInput, finalData) {
                                 paste0(1:20))
 
 
-  # Replace latitude and longitude values in sousDF
-  #on se balade dans tt les valeurs du tableau
+    # Replace latitude and longitude values in sousDF
+    #on se balade dans tt les valeurs du tableau
     for (i in seq_along(sousDF$ville)) {
         #on definit ville comme nom de la ville
         ville <- sousDF$ville[i]
