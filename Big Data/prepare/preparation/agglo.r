@@ -1,4 +1,4 @@
-Agglo2Num <- function(dataInput, finalData) {
+Agglo2Num <- function(dataInput) {
     #on obtient 2 valeurs uniques on va les convertir et leur donner une valeur num
     # tq  -> ("En agglomération" : 1 ,"En agglomération" :0)
     aggloDict <- list("En agglomération" = 1, "Hors agglomération" = 0)
