@@ -19,7 +19,7 @@ villes_mapbox <- villes %>%
     # Taille et couleur selon le nombre d'accidents
     size = ~nombre_accidents, color = ~nombre_accidents,
     # choix de la palette de couleur
-    colors = RColorBrewer::brewer.pal(n = 10, name = "Blues"),
+    colors = RColorBrewer::brewer.pal(n = 9, name = "Blues"),
     # mode d'affichage
     mode = "markers",
     #ajout de texte sur chaque points pour voir les informations 
@@ -32,7 +32,7 @@ villes_mapbox <- villes %>%
     mapbox = list(
       style = "dark",
       zoom = 4,
-      center = list(lat = ~ xmedian(latitude), lon = ~ median(longitude))
+      center = list(lat = ~ median(latitude), lon = ~ median(longitude))
     ),
     # légende
     legend = list(
