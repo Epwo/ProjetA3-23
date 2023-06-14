@@ -1,12 +1,16 @@
 
-data <- read.csv("Big Data\\tempcsv.csv", sep = ",")
 
-for (i in seq_along(data$descr_cat_veh)) {
-        #on definit ville comme nom de la ville
-    element <- data$descr_cat_veh[i]
-    if(element == "NULL"){
-        print(element)
+printNull <- function(data) {
+    for (col_name in list("date","id_code_insee","place")) {
+    sousDF <- subset(data, (is.na(data[[col_name]])) )
+    if (nrow(sousDF) > 0) {
+        print(col_name)
+        print(typeof(data[[col_name]]))
+        print(nrow(sousDF))
+        print('--')
+    }
     }
 }
-finalData <- read.csv("Big Data\\csvOutTrait.csv", sep = ",")
-is.na(finalData$date)
+
+data <- read.csv("Big Data\\csvOutput.csv", sep = ",", stringsAsFactors = FALSE)
+printNull(data)
