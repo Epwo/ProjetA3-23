@@ -1,2 +1,0 @@
-data <- read.csv("Big Data\\csvSource.csv",sep=";")
-str(data)
