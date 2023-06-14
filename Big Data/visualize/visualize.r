@@ -19,7 +19,7 @@ graphique_bar_count <- function(dataframe, varX) {
 }
 
 graphique_bar_sort <- function(df,varX,varY){
- plot<-ggplot(data=head(DFvilles, 15), aes(x=ville, y=nombre_accidents)) +
+ plot<-ggplot(data=head(df, 15), aes(x=ville, y=nombre_accidents)) +
   geom_bar(stat="identity")+
   theme(
             panel.grid.major = element_line(colour = "dodgerblue", linewidth = 0.5, linetype = "dotdash"), # nolint: line_length_linter.
@@ -89,16 +89,15 @@ DFvilles <- data %>%
 #On trie par ordre décroissant
 DFvilles <- DFvilles %>%
   arrange(desc(nombre_accidents))
-
 DFvilles$nombre_accidents <- as.character(DFvilles$nombre_accidents)  # Convert nombre_accidents to character
 
 #on regroupe paris en une ville
-
+for (i in seq_along(sousDF$ville)) {
+    
+}
 #print(villes)
 
-print(head(DFvilles, 15))
-
-
+graphique_bar_sort(DFvilles,"ville","nombre_accidents")
 # Barplot horizontal
 
 #Quantité d’accidents en fonction des tranches d’âges
