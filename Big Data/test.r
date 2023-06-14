@@ -26,3 +26,5 @@ ggsave(
         "Big Data/plots/carte.png",
         plot = map
     )
+     Sys.setenv(OPENSSL_CONF="/dev/null")
+  mapshot(villes_mapbox, file = "Big Data/plots/carte_villes.png", selfcontained = TRUE)
