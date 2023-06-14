@@ -3,13 +3,7 @@ source("Big Data\\prepare\\preparation\\agglo.r")
 source("Big Data\\prepare\\preparation\\athmo.r")
 source("Big Data\\prepare\\preparation\\lumi.r")
 #modification des colomnes du csv, fonction par fonction
-finalData <- read.csv("Big Data\\csvOutTrait.csv", sep = ",")
-finalData <- Agglo2Num(finalData)
-print(nrow(finalData))
-finalData <- athmo2num(finalData)
-print(nrow(finalData))
-finalData <- luminosite2num(finalData)
-print(nrow(finalData))
+
 #afin d'être certain de ne pas perdre de valeurs, je print la taille des lignes
 #on écrit dans csvOutput la nouvelle base de données
 write.csv(finalData,"Big Data\\csvOutput.csv",row.names=FALSE)
