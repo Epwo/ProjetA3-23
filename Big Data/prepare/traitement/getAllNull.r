@@ -1,12 +1,15 @@
-data <- read.csv("Big Data\\csvOutput.csv",sep=";")
+data <- read.csv("Big Data\\csvOutput.csv",sep=",")
 #isnumeric()
 printNull <- function() {
-        sousDF <- subset(data, !is.numeric((data[["age"]])))
-        if(nrow(sousDF) > 0){
-            print(nrow(sousDF))
-            print('--')
-        }
+    print(nrow(data))
+    sousDF <- subset(data, is.numeric(data[['age']]))
+    if (nrow(sousDF) > 0) {
+        print("age")
+        print(nrow(sousDF))
+        write.csv(sousDF,"Big Data\\temp.csv",row.names=FALSE)
+        print('--')
     }
+}
 printMinors <- function() {
     sousDF <- subset(data, as.numeric(data$age) < 16 & data$descr_grav == "Tué")
     sousDF$age <- (as.numeric(sousDF$age) - 14)
