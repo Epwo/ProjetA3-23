@@ -14,7 +14,6 @@ graphique_bar_count <- function(dataframe, varX) {
     )
     ggsave(
         "Big Data/plots/bar_count.pdf",
-        "Big Data/plots/bar_count.pdf",
         plot = bar_plot
     )
 }
@@ -51,7 +50,7 @@ graphique_camenbert <- function(dataframe, var1, var2) {
 histogramme <- function(dataframe, var1) {
     hist <- ggplot(dataframe, aes(x = .data[[var1]])) +
     geom_histogram(stat = "count", binwidth = 2, fill = "#11a311e3", color = "black") +
-    labs(title = paste("Nombre d'accidents par tranche", var1), x = var1, y = "Nombre")+
+    labs(title = paste("Nombre d'accidents par", var1), x = var1, y = "Nombre")+
     theme_minimal() +
     theme(
             axis.title.x = element_text(size = 25, face = "bold"),
@@ -98,7 +97,8 @@ graphique_bar_sort(DFvilles,"ville","nombre_accidents")
 # Barplot horizontal
 
 #Quantité d’accidents en fonction des tranches d’âges
-sequence_age <- seq(0, 150, by = 10)
+sequence_age <- seq(0, 120, by = 10)
 data$tranche_age <- cut(data$age, breaks = sequence_age)
-#histogramme(data, "tranche_age")
-histogramme(data, "age")
+print(length(data$tranche_age))
+histogramme(data, "tranche_age")
+#histogramme(data, "age")
