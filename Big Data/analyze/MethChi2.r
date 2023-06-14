@@ -5,6 +5,6 @@ MethChi2 <- function(dataInput){
 
 
 }
-finalData <- read.csv("Big Data\\csvOutTrait.csv", sep = ",", stringsAsFactors = FALSE)
+finalData <- read.csv("Big Data\\csvOutput.csv", sep = ",", stringsAsFactors = FALSE)
 finalData <- MethChi2(finalData)
 print(finalData)
