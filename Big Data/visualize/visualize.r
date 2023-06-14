@@ -1,6 +1,7 @@
 library(ggplot2)
 library(magrittr)
 library(dplyr)
+
 graphique_bar_count <- function(dataframe, varX) {
     bar_plot <- ggplot(dataframe, aes(x = .data[[varX]])) + # nolint: line_length_linter.
         geom_bar(stat = "count", fill = "#2e6694") +
@@ -20,9 +21,9 @@ graphique_bar_count <- function(dataframe, varX) {
 
 graphique_bar_sort <- function(df,varX,varY){
     
-    plot<-ggplot(data=head(df, 15), aes(x=.data[[varX]], y=.data[[varY]])) +
-    geom_bar(stat="identity")+
-    theme(
+ plot<-ggplot(data=head(df, 15), aes(x=.data[[varX]], y=.data[[varY]])) +
+  geom_bar(stat="identity")+
+  theme(
             panel.grid.major = element_line(colour = "dodgerblue", linewidth = 0.5, linetype = "dotdash"), # nolint: line_length_linter.
             axis.text.x = element_text(angle = 90),
             plot.title = element_text(colour = "red", face = "bold", size = 25, hjust = 0.5), # nolint: line_length_linter.
@@ -43,10 +44,6 @@ graphique_camenbert <- function(dataframe, var1, var2) {
         plot = pie
     )
 }
-
-
-#Moyenne mensuelle des accidents
-#Nombre d’accidents par tranches d’heure
 
 histogramme <- function(dataframe, var1) {
     hist <- ggplot(dataframe, aes(x = .data[[var1]])) +
@@ -71,35 +68,34 @@ histogramme <- function(dataframe, var1) {
 data <- read.csv("Big Data/csvOutput.csv", sep = ",")
 
 #Nombre d’accidents en fonction des conditions atmosphériques
-#graphique_bar_count(data, "descr_athmo")
+graphique_bar_count(data, "descr_athmo")
 
 #Nombre d’accidents en fonction de la description de la surface
-#graphique_bar_count(data, "descr_etat_surf")
+graphique_bar_count(data, "descr_etat_surf")
 
 #Nombre d’accidents selon la gravite
-#print(data$descr_grav)
 graphique_bar_count(data, "descr_grav")
 
 #Nombre d’accidents par ville en France top 15
 #on créer un dataframe qui regroupe les villes par noms et repertorie le nombre d'accidents par ville
-
 DFvilles <- data %>%
   group_by(ville) %>%
   summarise(nombre_accidents = n())
-
 #On trie par ordre décroissant
 DFvilles <- DFvilles %>%
   arrange(desc(nombre_accidents))
 DFvilles$nombre_accidents <- as.character(DFvilles$nombre_accidents)  # Convert nombre_accidents to character
 
-#on regroupe paris en une ville
-
+#tracer le barplot
 graphique_bar_sort(DFvilles,"ville","nombre_accidents")
-# Barplot horizontal
+
 
 #Quantité d’accidents en fonction des tranches d’âges
-sequence_age <- seq(0, 120, by = 10)
-data$tranche_age <- cut(data$age, breaks = sequence_age)
-print(length(data$tranche_age))
-histogramme(data, "tranche_age")
-#histogramme(data, "age")
+sequence_age <- seq(0, 120, by = 10) #création de séquence d'age de 10 en 10
+data$tranche_age <- cut(data$age, breaks = sequence_age) #ajout d'une colonne au dataframe contenant la tranche d'age de chaque accident
+histogramme(data, "tranche_age") #tracer l'histogramme
+
+#Moyenne mensuelle des accidents
+
+#Nombre d’accidents par tranches d’heure
+data$tranche_heure <- as.numeric(data$date)ok
