@@ -37,7 +37,10 @@ graphique_camenbert <- function(dataframe, var1, var2) {
     deux_colonnes <- dataframe[, c(var1, var2)]
     pie <- ggplot(deux_colonnes, aes(x = "", y = dataframe[[var2]]), fill = dataframe[[var1]]) + # nolint: line_length_linter.
         geom_bar(width = 1, stat = "identity") + scale_fill_brewer()
-    print(pie)
+    ggsave(
+        "Big Data\\plots\\pie_chart.pdf",
+        plot = pie
+    )
 }
 
 
@@ -57,7 +60,10 @@ histogramme <- function(dataframe, var1) {
             axis.text.x = element_text(angle = 90),
             plot.title = element_text(colour = "red", face = "bold", size = 25, hjust = 0.5), # nolint: line_length_linter.
     )
-    print(hist)
+    ggsave(
+        "Big Data\\plots\\histogramme.pdf",
+        plot = hist
+    )
 }
 
 
