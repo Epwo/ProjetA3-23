@@ -2,3 +2,4 @@ tempCodeRunnerFile.r
 *.Rhistory
 *.RData
 .vscode/*
+plots/
