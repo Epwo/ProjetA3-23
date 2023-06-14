@@ -8,3 +8,4 @@ for (i in seq_along(data$desc_grav)) {
         print(ville)
     }
 }
+print(unique(data()))
