@@ -41,10 +41,10 @@ villes_mapbox <- villes %>%
     )
   )
 #afficher la carte
-print(villes_mapbox)
+#print(villes_mapbox)
 
 histogramme <- function(dataframe, var1) {
-    hist <- ggplot(dataframe, aes(x = .data[[var1]])) +
+    hist <- ggplot(dataframe, aes(x = age_group)) +
     geom_histogram(binwidth = 2, fill = "#11a311e3", color = "black") +
     labs(title = paste("Nombre d'accidents par tranche", var1), x = var1, y = "Nombre")+
     theme_minimal() +
@@ -58,5 +58,7 @@ histogramme <- function(dataframe, var1) {
     )
     print(hist)
 }
-
-#histogramme(data, "age")
+data <- read.csv("Big Data/csvOutTrait.csv", sep = ",")
+sequence_age <- seq(0, 110, by = 10)
+cut_age <- cut(data$age, breaks = sequence_age)
+histogramme(cut_age, "age")

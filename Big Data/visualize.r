@@ -56,7 +56,7 @@ data <- read.csv("Big Data/csvOutTrait.csv", sep = ",")
 print(data$descr_grav)
 graphique_bar(data, "descr_grav")
 
-#Nombre d’accidents par ville en France top 10
+#Nombre d’accidents par ville en France top 15
 #on créer un dataframe qui regroupe les villes par noms et repertorie le nombre d'accidents par ville
 villes <- data %>%
   group_by(ville) %>%
