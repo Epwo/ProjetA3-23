@@ -10,8 +10,6 @@ TreatLongLat <- function(dataInput, finalData) {
     for (i in seq_along(sousDF$ville)) {
          #on definit ville comme nom de la ville
         ville <- sousDF$ville[i]
-        #on definit ville comme nom de la ville
-        ville <- sousDF$ville[i]
         if(startsWith(ville,"PARIS")){
             #on recupere le num de quartier, en enlevant "PARIS" du nom de la ville -> 'PARIS 13' -> '13'
             quartier_num <- as.numeric(sub("PARIS ", "", ville))
