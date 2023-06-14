@@ -1,8 +1,16 @@
-#install.packages("plotly")
 library(plotly)
 library(dplyr)
-#install.packages("rnaturalearth")
+library(mapdeck)
+library(sf)
+library(tmap)
 library(rnaturalearth)
+library(rmapshaper)
+library(ggplot2)
+library(terra)
+library(mapview)
+library(leaflet)
+library(maps)
+# declaration du token
 
 #Nombre d’accidents par ville en France
 
@@ -47,8 +55,17 @@ carte_accidents_par_ville <- function(){
 }
 
 carte_accidents_par_dep <- function(){
-  france <- ne_states(country = "France", returnclass = "sf")
+  #creer le fond de carte
+  Sys.setenv('MAPBOX_TOKEN' = 'pk.eyJ1IjoicGhpbGlwcGluZWFuZ2JkIiwiYSI6ImNsaXV1cG9hdjFzOWwzZG54YmcyaTMwYXEifQ.GNGi4FnQmOPefaMgaGoGxQ')
+  france <- read_sf("departements.shp")
+  mapdeck() %>%
+  add_geojson(
+    data = france, fill_colour = "region", auto_highlight = TRUE, tooltip = "name", 
+    layer_id = "geojson"
+  )
   }
+
+
 
 data <- read.csv("Big Data/csvOutTrait.csv", sep = ",")
 carte_accidents_par_dep()
