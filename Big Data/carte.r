@@ -50,10 +50,14 @@ carte_accidents_par_ville <- function(){
 
 carte_accidents_par_region<- function(){
   map_leaflet <- leaflet() %>%
-   addTiles()%>%
-   setView(lng = 2.80, lat = 46.80, zoom = 6)
+   addProviderTiles("Esri.OceanBasemap")
   print(map_leaflet)
 }
 
-data <- read.csv("Big Data/csvOutTrait.csv", sep = ",")
-carte_accidents_par_ville()
+data <- read.csv("Big Data/csvOutput.csv", sep = ",")
+data_departement <- read.csv("Big Data/departement_2022.csv", sep = ",")
+
+code_postal <- substr(data$id_code_insee, 1, 2) #extraction des caractères à la position 1 et la positon 2
+data$departement <- data_departement$DEP
+print(data_departement$DEP)
+print(code_postal)
