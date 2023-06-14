@@ -58,7 +58,7 @@ histogramme <- function(dataframe, var1) {
     )
     print(hist)
 }
-data <- read.csv("Big Data/csvOutTrait.csv", sep = ",")
-sequence_age <- seq(0, 110, by = 10)
-data$cut_age <- cut(data$age, breaks = sequence_age)
-histogramme(data, "cut_age")
+data <- read.csv("Big Data/csvOutput.csv", sep = ",")
+sequence_age <- seq(0, 130, by = 10)
+data$tranche_age <- cut(data$age, breaks = sequence_age)
+histogramme(data, "tranche_age")

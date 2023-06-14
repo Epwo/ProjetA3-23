@@ -38,7 +38,7 @@ graphique_camenbert <- function(dataframe, var1, var2) {
     pie <- ggplot(deux_colonnes, aes(x = "", y = dataframe[[var2]]), fill = dataframe[[var1]]) + # nolint: line_length_linter.
         geom_bar(width = 1, stat = "identity") + scale_fill_brewer()
     ggsave(
-        "Big Data\\plots\\pie_chart.pdf",
+        "Big Data\\plots\\pie_chart.png",
         plot = pie
     )
 }
@@ -49,19 +49,19 @@ graphique_camenbert <- function(dataframe, var1, var2) {
 
 histogramme <- function(dataframe, var1) {
     hist <- ggplot(dataframe, aes(x = .data[[var1]])) +
-    geom_histogram(binwidth = 2, fill = "#11a311e3", color = "black") +
+    geom_histogram(stat = "count", binwidth = 2, fill = "#11a311e3", color = "black") +
     labs(title = paste("Nombre d'accidents par tranche", var1), x = var1, y = "Nombre")+
     theme_minimal() +
     theme(
             axis.title.x = element_text(size = 25, face = "bold"),
             axis.title.y = element_text(size = 25, face = "bold"),
-            panel.grid.major = element_line(colour = "dodgerblue", linewidth = 0.5, linetype = "dotdash"), # nolint: line_length_linter.
+            panel.grid.major = element_line(colour = "dodgerblue", size = 0.5, linetype = "dotdash"), # nolint: line_length_linter.
             axis.text = element_text(size = 25, face = "bold"),
             axis.text.x = element_text(angle = 90),
             plot.title = element_text(colour = "red", face = "bold", size = 25, hjust = 0.5), # nolint: line_length_linter.
     )
     ggsave(
-        "Big Data\\plots\\histogramme.pdf",
+        "Big Data\\plots\\histogramme.png",
         plot = hist
     )
 }
@@ -101,4 +101,6 @@ graphique_bar_sort(DFvilles,"ville","nombre_accidents")
 # Barplot horizontal
 
 #Quantité d’accidents en fonction des tranches d’âges
-#histogramme(data, "age")
+sequence_age <- seq(0, 130, by = 10)
+data$tranche_age <- cut(data$age, breaks = sequence_age)
+histogramme(data, "tranche_age")
