@@ -14,15 +14,14 @@ graphique_bar_count <- function(dataframe, varX) {
     )
     ggsave(
         "Big Data/plots/bar_count.pdf",
-        "Big Data/plots/bar_count.pdf",
         plot = bar_plot
     )
 }
 
 graphique_bar_sort <- function(df,varX,varY){
- plot<-ggplot(data=head(df, 15), aes(x=.data[[varX]], y=.data[[varY]])) +
-  geom_bar(stat="identity")+
-  theme(
+    plot<-ggplot(data=head(df, 15), aes(x=.data[[varX]], y=.data[[varY]])) +
+    geom_bar(stat="identity")+
+    theme(
             panel.grid.major = element_line(colour = "dodgerblue", linewidth = 0.5, linetype = "dotdash"), # nolint: line_length_linter.
             axis.text.x = element_text(angle = 90),
             plot.title = element_text(colour = "red", face = "bold", size = 25, hjust = 0.5), # nolint: line_length_linter.
@@ -93,6 +92,19 @@ DFvilles <- DFvilles %>%
 DFvilles$nombre_accidents <- as.character(DFvilles$nombre_accidents)  # Convert nombre_accidents to character
 
 #on regroupe paris en une ville
+for (i in seq_along(DFvilles$ville)) {
+        #on definit ville comme nom de la ville
+    ville <- DFvilles$ville[i]
+    if(startsWith(ville,"PARIS")){
+        DFvilles$ville[i] = 'PARIS'
+    }
+    else if(startsWith(ville,"MARSEILLE")){
+        DFvilles$ville[i] = 'MARSEILLE'
+    }
+    else if(startsWith(ville,"LYON")){
+        DFvilles$ville[i] = 'LYON'
+    }
+}
 
 graphique_bar_sort(DFvilles,"ville","nombre_accidents")
 # Barplot horizontal
