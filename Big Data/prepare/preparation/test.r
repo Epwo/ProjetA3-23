@@ -1,4 +1,10 @@
-data <- read.csv("Big Data\\csvSource.csv", sep = ";")
-new_database <- read.csv("Big Data\\csvSource.csv", sep = ";")
 
-print(unique(new_database["descr_grav"]))
+data <- read.csv("Big Data\\tempcsv.csv", sep = ",")
+
+for (i in seq_along(data$descr_cat_veh)) {
+        #on definit ville comme nom de la ville
+    element <- data$descr_cat_veh[i]
+    if(element == "NULL"){
+        print(element)
+    }
+}
