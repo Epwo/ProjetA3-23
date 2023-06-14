@@ -10,6 +10,9 @@ finalData <- athmo2num(finalData)
 print(nrow(finalData))
 finalData <- luminosite2num(finalData)
 print(nrow(finalData))
+finalData <- PrepCatVeh(finalData,finalData)
+print(nrow(finalData))
+
 #afin d'être certain de ne pas perdre de valeurs, je print la taille des lignes
 #on écrit dans csvOutput la nouvelle base de données
 write.csv(finalData,"Big Data\\csvOutput.csv",row.names=FALSE)
