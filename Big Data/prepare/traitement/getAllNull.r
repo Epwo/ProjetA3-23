@@ -1,15 +1,12 @@
-data <- read.csv("Big Data\\csvSource.csv",sep=";")
+data <- read.csv("Big Data\\csvOutput.csv",sep=";")
 #isnumeric()
 printNull <- function() {
-    for (col_name in colnames(data)) {
-        sousDF <- subset(data, data[[col_name]] == "NULL")
+        sousDF <- subset(data, !is.numeric((data[["age"]])))
         if(nrow(sousDF) > 0){
-            print(col_name)
             print(nrow(sousDF))
             print('--')
         }
     }
-}
 printMinors <- function() {
     sousDF <- subset(data, as.numeric(data$age) < 16 & data$descr_grav == "Tué")
     sousDF$age <- (as.numeric(sousDF$age) - 14)
@@ -35,15 +32,12 @@ AnormalValuesGeo <- function(){
     print(squareFR)
 }
 
-for (i in seq_along(sousDF$ville)) {
+#for (i in seq_along(sousDF$ville)) {
         #on definit ville comme nom de la ville
-    ville <- sousDF$ville[i]
-    if(!(isInsideFRsquare(sousDF$latitude[i],sousDF$longitude[i]))){
-        print(ville)
-    }
-}
+ #   ville <- sousDF$ville[i]
+    #if(!(isInsideFRsquare(sousDF$latitude[i],sousDF$longitude[i]))){
+     #   print(ville)
+    #}
+#}
 
-inside <- isInsideFRsquare(latitude, longitude)
-print(inside)
-
-AnormalValuesGeo()
+printNull()

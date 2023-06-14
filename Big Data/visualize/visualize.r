@@ -1,26 +1,47 @@
 library(ggplot2)
-
-graphique_bar <- function(dataframe, var1) {
-    bar_plot <- ggplot(dataframe, aes(x = .data[[var1]])) + # nolint: line_length_linter.
+library(magrittr)
+library(dplyr)
+graphique_bar_count <- function(dataframe, varX) {
+    bar_plot <- ggplot(dataframe, aes(x = .data[[varX]])) + # nolint: line_length_linter.
         geom_bar(stat = "count", fill = "#2e6694") +
-        labs(x = var1, y = "Nombre accidents", title = paste("Nombre d'accidents en fonction de", var1)) + # nolint: line_length_linter.
+        labs(x = varX, y = "Nombre accidents", title = paste("Nombre d'accidents en fonction de", varX)) + # nolint: line_length_linter.
         theme_minimal() +
         theme(
-            axis.title.x = element_text(size = 25, face = "bold"),
-            axis.title.y = element_text(size = 25, face = "bold"),
-            panel.grid.major = element_line(colour = "dodgerblue", size = 0.5, linetype = "dotdash"), # nolint: line_length_linter.
+            panel.grid.major = element_line(colour = "dodgerblue", linewidth = 0.5, linetype = "dotdash"), # nolint: line_length_linter.
             axis.text = element_text(size = 25, face = "bold"),
             axis.text.x = element_text(angle = 90),
             plot.title = element_text(colour = "red", face = "bold", size = 25, hjust = 0.5), # nolint: line_length_linter.
     )
-    print(bar_plot)
+    ggsave(
+        "Big Data/plots/bar_count.pdf",
+        "Big Data/plots/bar_count.pdf",
+        plot = bar_plot
+    )
+}
+
+graphique_bar_sort <- function(df,varX,varY){
+ plot<-ggplot(data=head(df, 15), aes(x=.data[[varX]], y=.data[[varY]])) +
+  geom_bar(stat="identity")+
+  theme(
+            panel.grid.major = element_line(colour = "dodgerblue", linewidth = 0.5, linetype = "dotdash"), # nolint: line_length_linter.
+            axis.text.x = element_text(angle = 90),
+            plot.title = element_text(colour = "red", face = "bold", size = 25, hjust = 0.5), # nolint: line_length_linter.
+    )
+
+    ggsave(
+        "Big Data/plots/bar_sort.pdf",
+        plot = plot
+    )
 }
 
 graphique_camenbert <- function(dataframe, var1, var2) {
     deux_colonnes <- dataframe[, c(var1, var2)]
     pie <- ggplot(deux_colonnes, aes(x = "", y = dataframe[[var2]]), fill = dataframe[[var1]]) + # nolint: line_length_linter.
         geom_bar(width = 1, stat = "identity") + scale_fill_brewer()
-    print(pie)
+    ggsave(
+        "Big Data/plots/pie_chart.png",
+        plot = pie
+    )
 }
 
 
@@ -29,53 +50,55 @@ graphique_camenbert <- function(dataframe, var1, var2) {
 
 histogramme <- function(dataframe, var1) {
     hist <- ggplot(dataframe, aes(x = .data[[var1]])) +
-    geom_histogram(binwidth = 2, fill = "#11a311e3", color = "black") +
+    geom_histogram(stat = "count", binwidth = 2, fill = "#11a311e3", color = "black") +
     labs(title = paste("Nombre d'accidents par tranche", var1), x = var1, y = "Nombre")+
     theme_minimal() +
     theme(
             axis.title.x = element_text(size = 25, face = "bold"),
             axis.title.y = element_text(size = 25, face = "bold"),
-            panel.grid.major = element_line(colour = "dodgerblue", size = 0.5, linetype = "dotdash"), # nolint: line_length_linter.
+            panel.grid.major = element_line(colour = "dodgerblue", linewidth = 0.5, linetype = "dotdash"), # nolint: line_length_linter.
             axis.text = element_text(size = 25, face = "bold"),
             axis.text.x = element_text(angle = 90),
-            plot.title = element_text(colour = "red", face = "bold", size = 25, hjust = 0.5), # nolint: line_length_linter.
+            plot.title = element_text(colour = "red", face = "bold", size = 15, hjust = 0.5), # nolint: line_length_linter.
     )
-    print(hist)
+    ggsave(
+        "Big Data/plots/histogramme.pdf",
+        plot = hist
+    )
 }
 
 
-data <- read.csv("Big Data/csvOutTrait.csv", sep = ",")
+data <- read.csv("Big Data/csvOutput.csv", sep = ",")
 
 #Nombre d’accidents en fonction des conditions atmosphériques
-#graphique_bar(data, "descr_athmo")
+#graphique_bar_count(data, "descr_athmo")
 
 #Nombre d’accidents en fonction de la description de la surface
-#graphique_bar(data, "descr_etat_surf")
+#graphique_bar_count(data, "descr_etat_surf")
 
 #Nombre d’accidents selon la gravite
-print(data$descr_grav)
-graphique_bar(data, "descr_grav")
+#print(data$descr_grav)
+graphique_bar_count(data, "descr_grav")
 
 #Nombre d’accidents par ville en France top 15
 #on créer un dataframe qui regroupe les villes par noms et repertorie le nombre d'accidents par ville
-villes <- data %>%
+
+DFvilles <- data %>%
   group_by(ville) %>%
   summarise(nombre_accidents = n())
 
 #On trie par ordre décroissant
-villes <- villes %>%
+DFvilles <- DFvilles %>%
   arrange(desc(nombre_accidents))
+DFvilles$nombre_accidents <- as.character(DFvilles$nombre_accidents)  # Convert nombre_accidents to character
 
-villes$nombre_accidents <- str(villes$nombre_accidents)
 #on regroupe paris en une ville
 
-#villes  <- villes %>% 
-#   subset(villes, grepl("PARIS", villes["ville"]))
-
-top_15_villes <- head(villes, 15)
-
-print(top_15_villes)
-graphique_bar(top_15_villes, "ville")
+graphique_bar_sort(DFvilles,"ville","nombre_accidents")
+# Barplot horizontal
 
 #Quantité d’accidents en fonction des tranches d’âges
-#histogramme(data, "age")
+sequence_age <- seq(0, 150, by = 10)
+data$tranche_age <- cut(data$age, breaks = sequence_age)
+#histogramme(data, "tranche_age")
+histogramme(data, "age")
