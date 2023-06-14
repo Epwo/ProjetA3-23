@@ -14,6 +14,7 @@ graphique_bar_count <- function(dataframe, varX) {
     )
     ggsave(
         "Big Data/plots/bar_count.pdf",
+        "Big Data/plots/bar_count.pdf",
         plot = bar_plot
     )
 }
@@ -38,7 +39,7 @@ graphique_camenbert <- function(dataframe, var1, var2) {
     pie <- ggplot(deux_colonnes, aes(x = "", y = dataframe[[var2]]), fill = dataframe[[var1]]) + # nolint: line_length_linter.
         geom_bar(width = 1, stat = "identity") + scale_fill_brewer()
     ggsave(
-        "Big Data\\plots\\pie_chart.png",
+        "Big Data/plots/pie_chart.png",
         plot = pie
     )
 }
@@ -58,10 +59,10 @@ histogramme <- function(dataframe, var1) {
             panel.grid.major = element_line(colour = "dodgerblue", linewidth = 0.5, linetype = "dotdash"), # nolint: line_length_linter.
             axis.text = element_text(size = 25, face = "bold"),
             axis.text.x = element_text(angle = 90),
-            plot.title = element_text(colour = "red", face = "bold", size = 25, hjust = 0.5), # nolint: line_length_linter.
+            plot.title = element_text(colour = "red", face = "bold", size = 15, hjust = 0.5), # nolint: line_length_linter.
     )
     ggsave(
-        "Big Data\\plots\\histogramme.pdf",
+        "Big Data/plots/histogramme.pdf",
         plot = hist
     )
 }
@@ -93,12 +94,11 @@ DFvilles$nombre_accidents <- as.character(DFvilles$nombre_accidents)  # Convert 
 
 #on regroupe paris en une ville
 
-#print(villes)
-
 graphique_bar_sort(DFvilles,"ville","nombre_accidents")
 # Barplot horizontal
 
 #Quantité d’accidents en fonction des tranches d’âges
 sequence_age <- seq(0, 150, by = 10)
 data$tranche_age <- cut(data$age, breaks = sequence_age)
-histogramme(data, "tranche_age")
+#histogramme(data, "tranche_age")
+histogramme(data, "age")

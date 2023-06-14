@@ -8,4 +8,5 @@ for (i in seq_along(data$descr_cat_veh)) {
         print(element)
     }
 }
-print(unique(data()))
+finalData <- read.csv("Big Data\\csvOutTrait.csv", sep = ",")
+is.na(finalData$date)
