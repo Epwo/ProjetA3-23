@@ -42,3 +42,21 @@ villes_mapbox <- villes %>%
   )
 #afficher la carte
 print(villes_mapbox)
+
+histogramme <- function(dataframe, var1) {
+    hist <- ggplot(dataframe, aes(x = .data[[var1]])) +
+    geom_histogram(binwidth = 2, fill = "#11a311e3", color = "black") +
+    labs(title = paste("Nombre d'accidents par tranche", var1), x = var1, y = "Nombre")+
+    theme_minimal() +
+    theme(
+            axis.title.x = element_text(size = 25, face = "bold"),
+            axis.title.y = element_text(size = 25, face = "bold"),
+            panel.grid.major = element_line(colour = "dodgerblue", size = 0.5, linetype = "dotdash"), # nolint: line_length_linter.
+            axis.text = element_text(size = 25, face = "bold"),
+            axis.text.x = element_text(angle = 90),
+            plot.title = element_text(colour = "red", face = "bold", size = 25, hjust = 0.5), # nolint: line_length_linter.
+    )
+    print(hist)
+}
+
+#histogramme(data, "age")
