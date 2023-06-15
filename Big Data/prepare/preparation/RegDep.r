@@ -21,7 +21,15 @@ returnDfRegDep <- function(df){
   df$departement <- NA
   #on se deplace dans la df
   for (i in seq_len(nrow(df))) {
-    print(i)
+    progress <- i / nrow(df)
+    filled_width <- round(progress * 40)
+    progress_bar <- sprintf("[%s%s]", strrep("=", filled_width), strrep(" ", 40 - filled_width))
+
+    cat("\rProgress: ", i, " out of ", nrow(df)," | ", round(progress * 100, 1), "% ", progress_bar)
+    flush.console()
+    # Print the progress text
+
+
     #on essaie avec le code insee (a 2 premiers chiffres) tq XXYYY
     code_insee <- substr(df$id_code_insee[i], 0, 2)
     resultat <- obtenirRegionEtDepartement(as.character(code_insee))
