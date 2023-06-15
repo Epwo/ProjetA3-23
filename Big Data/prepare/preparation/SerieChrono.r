@@ -21,10 +21,13 @@ PrepSerieChrono <- function(dataInput,name,by){
     serie_chronologique <- ts(accidents_data$number_of_accidents, start = c(2009,1), frequency = 52)
 
     #affiche la série chronologique
-    plot(serie_chronologique, main = "Évolution du nombre d'accidents par mois", xlab = "Mois", ylab = "Nombre d'accidents")
-    plot(serie_chronologique, main = "Évolution du nombre d'accidents par semaine", xlab = "Semaine", ylab ="Nombre d'accidents")
+    if(name == 'Month'){
+        plot(serie_chronologique, main = "Évolution du nombre d'accidents par mois", xlab = "Mois", ylab = "Nombre d'accidents")
+    } else if (name == 'Week'){
+         plot(serie_chronologique, main = "Évolution du nombre d'accidents par semaine", xlab = "Semaine", ylab ="Nombre d'accidents")
+    }
 
 }
 dataInput <- read.csv("Big Data/csvOutputNum.csv") 
-print(PrepSerieChrono(dataInput,name='regLinMonth',by='month'))
-print(PrepSerieChrono(dataInput,name='regLinWeek',by='week'))
+print(PrepSerieChrono(dataInput,name='Month',by='month'))
+print(PrepSerieChrono(dataInput,name='Week',by='week'))
