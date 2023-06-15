@@ -5,6 +5,8 @@ source("Big Data/prepare/preparation/format.r")
 source("Big Data/prepare/preparation/agglo.r")
 source("Big Data/prepare/preparation/athmo.r")
 source("Big Data/prepare/preparation/lumi.r")
+source("Big Data/prepare/preparation/RegDep.r")
+
 
 ReplaceStrByNum <- function(dfInput){
     dfInput <- luminosite2num(dfInput) # nolint: object_usage_linter.
@@ -22,11 +24,13 @@ finalData <- PrepCatVeh(data,data)
 print(nrow(finalData))
 finalData <- gravite2num(finalData)
 print(nrow(finalData))
-finalData <- PrepFormat((finalData))
+finalData <- PrepFormat(finalData)
+print(nrow(finalData))
+finalData <- returnDfRegDep(finalData)
 print(nrow(finalData))
 
-finalData <- ReplaceStrByNum(finalData)
+#finalData <- ReplaceStrByNum(finalData)
 
 #afin d'être certain de ne pas perdre de valeurs, je print la taille des lignes
 #on écrit dans csvOutput la nouvelle base de données
-write.csv(finalData,"Big Data/csvOutputNum.csv",row.names=FALSE,quote = FALSE)
+write.csv(finalData,"Big Data/csvOutput.csv",row.names=FALSE,quote = FALSE)
