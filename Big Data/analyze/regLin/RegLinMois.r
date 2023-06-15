@@ -1,6 +1,6 @@
 library(dplyr)
 library(ggplot2)
-printRegLinMonth <- function(data, name, by) {
+printRegLin <- function(data, name, by) {
   # Convertir la colonne 'date' en format de date
   data$date <- as.Date(data$date)
 
@@ -22,7 +22,7 @@ printRegLinMonth <- function(data, name, by) {
   model <- lm(number_of_accidents ~ as.numeric(group), data = accidents_data)
 
   # Créer le graphique
-  plot <- ggplot(accidents_data, aes(x = group, y = number_of_accidents)) +
+  plot <- ggplot(accidents_data, aes(x = group, y = number_of_accidents)) + # nolint
     geom_point() +
     geom_smooth(method = "lm", se = FALSE) +
     geom_text(aes(label = paste("y =", round(coef(model)[1], 2), "+", round(coef(model)[2], 2), "x")), x = Inf, y = -Inf, hjust = 1, vjust = 0, size = 4) +
@@ -33,4 +33,5 @@ printRegLinMonth <- function(data, name, by) {
 
   # Sauvegarder le graphique en fichier PDF
   ggsave(paste("Big Data/plots/", name, ".pdf", sep = ""), plot, width = 8, height = 6)
+  return(model)
 }
