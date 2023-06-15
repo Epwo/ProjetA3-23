@@ -29,8 +29,8 @@ print(nrow(finalData))
 finalData <- returnDfRegDep(finalData)
 print(nrow(finalData))
 
-finalData <- ReplaceStrByNum(finalData)
+#finalData <- ReplaceStrByNum(finalData)
 
 #afin d'être certain de ne pas perdre de valeurs, je print la taille des lignes
 #on écrit dans csvOutput la nouvelle base de données
-write.csv(finalData,"Big Data/csvOutputNum.csv",row.names=FALSE,quote = FALSE)
+write.csv(finalData,"Big Data/csvOutput.csv",row.names=FALSE,quote = FALSE)
