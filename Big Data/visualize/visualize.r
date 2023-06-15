@@ -25,12 +25,6 @@ graphique_bar_count <- function(dataframe, varX) {
     )
 }
 
-#fonction pour tracer des diagrammes en barres d'un dataframe compté
-graphique_bar_sort <- function(df,varX,varY){
-    
-    plot<-ggplot(data=head(df, 15), aes(x=.data[[varX]], y=.data[[varY]])) +
-  geom_bar(stat="identity",  fill = "#2e6694")+ #stat = identity prend les valeurs de x et de y pour tracer le diagramme en barres
-  labs( title = "Nombre d'accidents en fonction des villes")+
 
   #changement de l'apparance
   theme(
