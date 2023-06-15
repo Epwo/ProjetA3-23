@@ -8,12 +8,13 @@ graphique_bar_count <- function(dataframe, varX) {
         labs(x = varX, y = "Nombre accidents", title = paste("Nombre d'accidents en fonction de", varX)) + # nolint: line_length_linter.
         theme_minimal() +
         theme(
+            plot.background = element_rect(colour = "white"),
             panel.grid.major = element_line(colour = "dodgerblue", linewidth = 0.5, linetype = "dotdash"), # nolint: line_length_linter.
-            axis.text = element_text(size = 25, face = "bold"),
+            axis.text = element_text(size = 15, face = "bold"),
             axis.text.x = element_text(angle = 90),
-            plot.title = element_text(colour = "red", face = "bold", size = 25, hjust = 0.5), # nolint: line_length_linter.
+            plot.title = element_text(colour = "red", face = "bold", size = 15, hjust = 0.5), # nolint: line_length_linter.
     )
-    nom_fichier <- paste("Big Data/plots/bar_count_", varX, ".pdf")
+    nom_fichier <- paste("Big Data/plots/bar_count_", varX, ".png")
     ggsave(
         nom_fichier,
         plot = bar_plot
@@ -22,16 +23,18 @@ graphique_bar_count <- function(dataframe, varX) {
 
 graphique_bar_sort <- function(df,varX,varY){
     
- plot<-ggplot(data=head(df, 15), aes(x=.data[[varX]], y=.data[[varY]])) +
-  geom_bar(stat="identity")+
+    plot<-ggplot(data=head(df, 15), aes(x=.data[[varX]], y=.data[[varY]])) +
+  geom_bar(stat="identity",  fill = "#2e6694")+
+  labs( title = "Nombre d'accidents en fonction des villes")+
   theme(
+            plot.background = element_rect(colour = "white"),
             panel.grid.major = element_line(colour = "dodgerblue", linewidth = 0.5, linetype = "dotdash"), # nolint: line_length_linter.
             axis.text.x = element_text(angle = 90),
-            plot.title = element_text(colour = "red", face = "bold", size = 25, hjust = 0.5), # nolint: line_length_linter.
+            plot.title = element_text(colour = "red", face = "bold", size = 15, hjust = 0.5), # nolint: line_length_linter.
     )
 
     ggsave(
-        "Big Data/plots/bar_sort.pdf",
+        "Big Data/plots/bar_sort.png",
         plot = plot
     )
 }
@@ -52,6 +55,7 @@ histogramme <- function(dataframe, var1) {
     labs(title = paste("Nombre d'accidents par", var1), x = var1, y = "Nombre")+
     theme_minimal() +
     theme(
+            plot.background = element_rect(colour = "white"),
             axis.title.x = element_text(size = 15, face = "bold"),
             axis.title.y = element_text(size = 15, face = "bold"),
             panel.grid.major = element_line(colour = "dodgerblue", linewidth = 0.5, linetype = "dotdash"), # nolint: line_length_linter.
@@ -59,7 +63,7 @@ histogramme <- function(dataframe, var1) {
             axis.text.x = element_text(angle = 90),
             plot.title = element_text(colour = "red", face = "bold", size = 15, hjust = 0.5), # nolint: line_length_linter.
     )
-    nom_fichier <- paste("Big Data/plots/histogramme_", var1, ".pdf")
+    nom_fichier <- paste("Big Data/plots/histogramme_", var1, ".png")
     ggsave(
         nom_fichier,
         plot = hist
