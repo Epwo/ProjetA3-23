@@ -105,7 +105,7 @@ histogramme(data, "tranche_age") #tracer l'histogramme
 
 #Moyenne mensuelle des accidents
 data$moyenne_mois <- substr(data$date, 6, 7) #extraction des caractères à la position 12 et la positon 13
-print(data$moyenne_mois)
+
 histogramme(data, "moyenne_mois")
 
 

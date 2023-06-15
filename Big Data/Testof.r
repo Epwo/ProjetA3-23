@@ -1,12 +1,18 @@
 
 # Charger la base de données
-data <- read.csv("Big Data\\csvSource.csv", sep = ";")
+data <- read.csv("Big Data\\csvOutput.csv", sep = ",")
 
-# Créer une nouvelle colonne avec des valeurs spécifiques
-new_colonne <- data$id_code_insee
 
-# Ajouter la nouvelle colonne avec un nom spécifique à la base de données
-data <- cbind(data, nouvelle_colonne = new_colonne)
+uniqVilles <- unique(data["ville"])
+print(nrow(uniqVilles))
 
+uniqCat <- unique(data["descr_cat_veh"])
+print(nrow(uniqCat))
+
+uniqCol <- unique(data["descr_type_col"])
+print((uniqCol))
+
+uniqCol <- unique(data["descr_motif_traj"])
+print((uniqCol))
 # Écrire la base de données modifiée dans un nouveau fichier CSV
 write.csv(data, "Big Data\\departement_2022.csv", row.names = FALSE)

@@ -15,7 +15,7 @@ printRegLin <- function(data, name, by) {
 
   # Regrouper les données et compter le nombre d'accidents
   accidents_data <- data %>%
-    group_by(group) %>%
+    group_by(group) %>% # nolint
     summarise(number_of_accidents = n())
 
   # Ajuster un modèle de régression linéaire
