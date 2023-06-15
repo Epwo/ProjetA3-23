@@ -17,10 +17,14 @@ PrepSerieChrono <- function(dataInput,name,by){
 
 
     #crée la série chronologique
-    serie_chronologique <- ts(accidents_data$number_of_accidents, start = c(2009, 01), frequency = 12)
+    serie_chronologique <- ts(accidents_data$number_of_accidents, start = c(2009,1), frequency = 12)
+    serie_chronologique <- ts(accidents_data$number_of_accidents, start = c(2009,1), frequency = 52)
+
     #affiche la série chronologique
     plot(serie_chronologique, main = "Évolution du nombre d'accidents par mois", xlab = "Mois", ylab = "Nombre d'accidents")
+    plot(serie_chronologique, main = "Évolution du nombre d'accidents par semaine", xlab = "Semaine", ylab ="Nombre d'accidents")
 
 }
 dataInput <- read.csv("Big Data/csvOutputNum.csv") 
 print(PrepSerieChrono(dataInput,name='regLinMonth',by='month'))
+print(PrepSerieChrono(dataInput,name='regLinWeek',by='week'))
