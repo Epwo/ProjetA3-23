@@ -2,37 +2,44 @@ library(ggplot2)
 library(magrittr)
 library(dplyr)
 
-graphique_bar_count <- function(dataframe, varX) {
-    bar_plot <- ggplot(dataframe, aes(x = .data[[varX]])) + # nolint: line_length_linter.
-        geom_bar(stat = "count", fill = "#2e6694") +
-        labs(x = varX, y = "Nombre accidents", title = paste("Nombre d'accidents en fonction de", varX)) + # nolint: line_length_linter.
+#fonction pour tracer des diagrammes en barres d'un dataframe non-compté
+graphique_bar_count <- function(dataframe, varX) { 
+    bar_plot <- ggplot(dataframe, aes(x = .data[[varX]])) +
+        geom_bar(stat = "count", fill = "#2e6694") + #stat= count compte dans le dateframe le nombre de fois qu'une variable apparait
+        labs(x = varX, y = "Nombre accidents", title = paste("Nombre d'accidents en fonction de", varX)) +
+
+        #changement de l'apparance
         theme_minimal() +
         theme(
             plot.background = element_rect(colour = "white"),
-            panel.grid.major = element_line(colour = "dodgerblue", linewidth = 0.5, linetype = "dotdash"), # nolint: line_length_linter.
+            panel.grid.major = element_line(colour = "dodgerblue", linewidth = 0.5, linetype = "dotdash"), 
             axis.text = element_text(size = 15, face = "bold"),
             axis.text.x = element_text(angle = 90),
-            plot.title = element_text(colour = "red", face = "bold", size = 15, hjust = 0.5), # nolint: line_length_linter.
+            plot.title = element_text(colour = "red", face = "bold", size = 15, hjust = 0.5), 
     )
+    #sauvergarde en png
     nom_fichier <- paste("Big Data/plots/bar_count_", varX, ".png")
-    ggsave(
+    ggsave( 
         nom_fichier,
         plot = bar_plot
     )
 }
 
+#fonction pour tracer des diagrammes en barres d'un dataframe compté
 graphique_bar_sort <- function(df,varX,varY){
     
     plot<-ggplot(data=head(df, 15), aes(x=.data[[varX]], y=.data[[varY]])) +
-  geom_bar(stat="identity",  fill = "#2e6694")+
+  geom_bar(stat="identity",  fill = "#2e6694")+ #stat = identity prend les valeurs de x et de y pour tracer le diagramme en barres
   labs( title = "Nombre d'accidents en fonction des villes")+
+
+  #changement de l'apparance
   theme(
             plot.background = element_rect(colour = "white"),
             panel.grid.major = element_line(colour = "dodgerblue", linewidth = 0.5, linetype = "dotdash"), # nolint: line_length_linter.
             axis.text.x = element_text(angle = 90),
             plot.title = element_text(colour = "red", face = "bold", size = 15, hjust = 0.5), # nolint: line_length_linter.
     )
-
+    #sauvergarde en png
     ggsave(
         "Big Data/plots/bar_sort.png",
         plot = plot
@@ -49,10 +56,13 @@ graphique_camenbert <- function(dataframe, var1, var2) {
     )
 }
 
+#fonction pour tracer des histogrammes avec un dataframe non-compté
 histogramme <- function(dataframe, var1) {
     hist <- ggplot(dataframe, aes(x = .data[[var1]])) +
-    geom_histogram(stat = "count", binwidth = 2, fill = "#11a311e3", color = "black") +
+    geom_histogram(stat = "count", binwidth = 2, fill = "#11a311e3", color = "black") + #stat= count compte dans le dateframe le nombre de fois qu'une variable apparait
     labs(title = paste("Nombre d'accidents par", var1), x = var1, y = "Nombre")+
+   
+   #changement de l'apparance
     theme_minimal() +
     theme(
             plot.background = element_rect(colour = "white"),
@@ -63,6 +73,8 @@ histogramme <- function(dataframe, var1) {
             axis.text.x = element_text(angle = 90),
             plot.title = element_text(colour = "red", face = "bold", size = 15, hjust = 0.5), # nolint: line_length_linter.
     )
+
+     #sauvergarde en png
     nom_fichier <- paste("Big Data/plots/histogramme_", var1, ".png")
     ggsave(
         nom_fichier,
@@ -88,10 +100,14 @@ graphique_bar_count(data, "descr_grav")
 DFvilles <- data %>%
   group_by(ville) %>%
   summarise(nombre_accidents = n())
+
 #On trie par ordre décroissant
 DFvilles <- DFvilles %>%
   arrange(desc(nombre_accidents))
-DFvilles$nombre_accidents <- as.character(DFvilles$nombre_accidents)  # Convert nombre_accidents to character
+
+# Converti nombre_accidents en character
+DFvilles$nombre_accidents <- as.character(DFvilles$nombre_accidents)
+
 #tracer le barplot
 graphique_bar_sort(DFvilles,"ville","nombre_accidents")
 
@@ -104,9 +120,8 @@ histogramme(data, "tranche_age") #tracer l'histogramme
 
 
 #Moyenne mensuelle des accidents
-data$moyenne_mois <- substr(data$date, 6, 7) #extraction des caractères à la position 12 et la positon 13
-
-histogramme(data, "moyenne_mois")
+data$moyenne_mois <- substr(data$date, 6, 7) #extraction des caractères à la position 6 et la positon 7
+histogramme(data, "moyenne_mois")#tracer l'histogramme
 
 
 #Nombre d’accidents par tranches d’heure
@@ -114,11 +129,5 @@ tranche_heure <- substr(data$date, 12, 13) #extraction des caractères à la pos
 tranche_heure <- as.integer(tranche_heure)
 sequence_heure <- seq(0, 24, by = 2)
 data$tranche_heure <- cut(tranche_heure, breaks = sequence_heure,  include.lowest = TRUE)
-histogramme(data, "tranche_heure")
+histogramme(data, "tranche_heure")#tracer l'histogramme
 
-
-tranche_heure <- substr(data$date, 12, 13) #extraction des caractères à la position 12 et la positon 13
-tranche_heure <- as.integer(tranche_heure)
-sequence_heure <- seq(0, 24, by = 2)
-data$tranche_heure <- cut(tranche_heure, breaks = sequence_heure,  include.lowest = TRUE)
-histogramme(data, "tranche_heure")
