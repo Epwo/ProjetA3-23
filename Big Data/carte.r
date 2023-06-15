@@ -3,7 +3,7 @@ library(dplyr)
 library(ggplot2)
 library(mapview)
 library(leaflet)
-
+library(geojsonio)
 # declaration du token
 
 #Nombre d’accidents par ville en France
@@ -14,7 +14,6 @@ carte_accidents_par_ville <- function(){
   villes <- data %>%
     group_by(ville, latitude, longitude) %>%
     summarise(nombre_accidents = n())
-
 
   # Carte
   villes_mapbox <- villes %>%
@@ -48,16 +47,78 @@ carte_accidents_par_ville <- function(){
   print(villes_mapbox)
 }
 
-carte_accidents_par_region<- function(){
-  map_leaflet <- leaflet() %>%
-   addProviderTiles("Esri.OceanBasemap")
-  print(map_leaflet)
-}
 
-data <- read.csv("Big Data/csvOutput.csv", sep = ",")
-data_departement <- read.csv("Big Data/departement_2022.csv", sep = ",")
+#lecture des fichiers geojson contenant les limites des départements et des régions
+limite_dep <- geojson_read("Big Data/departements.geojson",  what = "sp")
+limite_region <- geojson_read("Big Data/regions.geojson",  what = "sp")   
 
-code_postal <- substr(data$id_code_insee, 1, 2) #extraction des caractères à la position 1 et la positon 2
-data$departement <- data_departement$DEP
-print(data_departement$DEP)
-print(code_postal)
+#lecture du df des accidents de 2009
+data <- read.csv("Big Data/csvOutput.csv", sep =',')
+
+#création d'un df contenant le nombre d'accidents par region
+df_accident_region <- data %>%
+  group_by(region) %>% #groupe les lignes de data par région
+  summarise(nombre_accidents = n()) #somme les lignes pour obtenir le nombre d'accidents
+
+#création d'un df contenant le nombre d'accidents par departement
+df_accident_departement <- data %>%
+  group_by(departement) %>% #groupe les lignes de data par département
+  summarise(nombre_accidents = n()) #somme les lignes pour obtenir le nombre d'accidents
+
+# Creation de la palette sur le nombres d'accidents
+pal_region <- colorBin(
+  palette = "inferno", #choix de la palette de couleur
+  domain = df_accident_departement$nombre_accidents, #Couleur en fonction du nombre d'accidents
+)
+pal_departement <- colorBin(
+  palette = "inferno",
+  domain = df_accident_departement$nombre_accidents,
+  reverse = TRUE
+)
+
+#creation de labels pour les cartes
+labels_nb_accident_region <- sprintf(
+  "<strong>%s</strong> %s </br> %g accidents",
+limite_region$nom, limite_region$code, df_accident_region$nombre_accidents
+)%>% lapply(htmltools :: HTML)
+labels_nb_accident_departement <- sprintf(
+  "<strong>%s</strong> %s </br> %g accidents",
+limite_dep$nom, limite_dep$code, df_accident_departement$nombre_accidents
+)%>% lapply(htmltools :: HTML)
+
+
+map_dep <- leaflet() %>%
+addProviderTiles("Esri.OceanBasemap") %>%
+addPolygons(
+  data = limite_dep, 
+  label = labels_nb_accident_reg,
+  popup = ~paste("Nombre d'accident par département"), 
+  fill = TRUE, 
+  # Application de la fonction palette
+  fillColor = ~pal(df_accident_departement$nombre_accidents),
+  fillOpacity = 0.8,
+  highlightOptions = highlightOptions(color = "white", weight = 2)) %>%
+   addLegend(
+    title = "Quantité d'accident en 2009",
+    pal = pal, values = df_accident_departement$nombre_accidents)
+
+
+
+map_region <- leaflet() %>%
+addProviderTiles("Esri.OceanBasemap") %>%
+addPolygons(
+  data = limite_region, 
+  label =  labels_nb_accident_reg,
+  popup = ~paste("Nombre d'accident par région"), 
+  fill = TRUE, 
+  # Application de la fonction palette
+  fillColor = 'grey',
+  fillOpacity = 0.8,
+  highlightOptions = highlightOptions(color = "white", weight = 2)) %>%
+   addLegend(
+    title = "Density nb/km2",
+    pal = pal, values = df_accident_region$nombre_accidents)
+
+print(map_region)
+
+
