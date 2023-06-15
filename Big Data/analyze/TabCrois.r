@@ -1,7 +1,7 @@
-library(gridExtra)
 tableau_croise <- function(df, var1, var2) {
     table <- ftable(df[[var1]], df[[var2]])
     # Create plot
-    write.table(table, file = "Big Data/plots/cc.pdf.txt", sep = ",", quote = FALSE, row.names = F)
+    cont <- stats:::format.ftable(table,quote=FALSE)
+    write.table(cont,sep=';',file = "Big Data/plots/crossTab.csv")
     return(table)
 }
