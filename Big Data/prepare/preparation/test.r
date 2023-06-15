@@ -1,7 +1,7 @@
 
 
 printNull <- function(data) {
-    sousDF <- subset(data, (data[['region']] == "Corse") )
+    sousDF <- subset(data, (data[['region']] == "Mayotte") )
     if (nrow(sousDF) > 0) {
 
         print(nrow(sousDF))
