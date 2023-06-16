@@ -24,12 +24,13 @@ PrepSerieChrono <- function(dataInput,name,by){
     #affiche la série chronologique
     if(name == 'Month'){
         plot(serie_chronologique, main = "Évolution du nombre d'accidents par mois", xlab = "Mois", ylab = "Nombre d'accidents")
+        print(serie_chronologique)
     } else if (name == 'Week'){
          plot(serie_chronologique2, main = "Évolution du nombre d'accidents par semaine", xlab = "Semaine", ylab ="Nombre d'accidents")
+         print(serie_chronologique2)
     }
-    ggsave("SerieChrono.png", plot = last_plot(), device = "png", dpi = 300, width = 8, height = 6)
-    print(serie_chronologique)
-    print(serie_chronologique2)
+    #ggsave("SerieChrono.png", plot = last_plot(), device = "png", dpi = 300, width = 8, height = 6)
+    
 
 }
 dataInput <- read.csv("Big Data/csvOutputNum.csv") 
