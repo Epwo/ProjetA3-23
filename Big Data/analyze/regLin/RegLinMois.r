@@ -21,7 +21,7 @@ printRegLin <- function(data, name, by) {
   # Ajuster un modèle de régression linéaire
 
   #ajuster pour fréquence cumulé
-  accidents_data$number_of_accidents = cumsum(accidents_data$number_of_accidents)
+  #accidents_data$number_of_accidents = cumsum(accidents_data$number_of_accidents)
 
   model <- lm(number_of_accidents ~ as.numeric(group), data = accidents_data)
   print(accidents_data)
@@ -33,7 +33,7 @@ printRegLin <- function(data, name, by) {
     geom_abline(intercept = coef(model)[1], slope = coef(model)[2], color = "red") +
     labs(x = ifelse(by == 'month', "Mois", "Semaine"),
          y = "Nombre d'accidents",
-         title = paste("Régression linéaire du nombre d'accidents par", by," - fréquence cumulée"))
+         title = paste("Régression linéaire du nombre d'accidents par", by))
 
   # Sauvegarder le graphique en fichier PDF
   ggsave(paste("Big Data/plots/", name, ".pdf", sep = ""), plot, width = 8, height = 6)
