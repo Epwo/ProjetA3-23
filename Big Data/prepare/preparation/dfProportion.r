@@ -20,16 +20,13 @@ listall <- list(
 
 data <- read.csv("Big Data/csvOutput.csv", sep = ",")
 
-counts <- aggregate(descr_grav ~ region, data, FUN = sum)
+#on va ponderer le nb d'accidents par la gravite
+counts <- aggregate(descr_grav + 1 ~ region, data, FUN = sum)
 
 # Rename the columns
 colnames(counts) <- c("region", "PonderationVal")
 counts_dict <- setNames(counts$PonderationVal, counts$region)
 
-print(nrow(counts_dict))
-print(length(listall))
-
-print(counts_dict)
 
 df <- data.frame(
   region = character(),
@@ -42,7 +39,7 @@ for(elt in listall){
     nbAcc <- as.numeric(counts_dict[elt$region])
     df <- rbind(df, data.frame(
         region = elt$region,
-        #on va ponderer le nb d'accidents par la gravite
+        
         nb_accidents_pondere = nbAcc,
         nb_habitants = elt$nbHab,
         nb_accidents_ratio100k = round((nbAcc/elt$nbHab)*100000,3)

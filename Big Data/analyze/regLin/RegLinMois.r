@@ -15,12 +15,16 @@ printRegLin <- function(data, name, by) {
 
   # Regrouper les données et compter le nombre d'accidents
   accidents_data <- data %>%
-    group_by(group) %>% # nolint
+    group_by(group) %>%
     summarise(number_of_accidents = n())
 
   # Ajuster un modèle de régression linéaire
-  model <- lm(number_of_accidents ~ as.numeric(group), data = accidents_data)
 
+  #ajuster pour fréquence cumulé
+  accidents_data$number_of_accidents = cumsum(accidents_data$number_of_accidents)
+
+  model <- lm(number_of_accidents ~ as.numeric(group), data = accidents_data)
+  print(accidents_data)
   # Créer le graphique
   plot <- ggplot(accidents_data, aes(x = group, y = number_of_accidents)) + # nolint
     geom_point() +
@@ -29,7 +33,7 @@ printRegLin <- function(data, name, by) {
     geom_abline(intercept = coef(model)[1], slope = coef(model)[2], color = "red") +
     labs(x = ifelse(by == 'month', "Mois", "Semaine"),
          y = "Nombre d'accidents",
-         title = paste("Régression linéaire du nombre d'accidents par", by))
+         title = paste("Régression linéaire du nombre d'accidents par", by," - fréquence cumulée"))
 
   # Sauvegarder le graphique en fichier PDF
   ggsave(paste("Big Data/plots/", name, ".pdf", sep = ""), plot, width = 8, height = 6)

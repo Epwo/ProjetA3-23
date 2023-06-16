@@ -1,3 +1,4 @@
+library(dplyr)
 PrepSerieChrono <- function(dataInput,name,by){
     #convertit la colonne date en type date
     dataInput$date <- as.Date(dataInput$date)
@@ -34,5 +35,4 @@ PrepSerieChrono <- function(dataInput,name,by){
 }
 dataInput <- read.csv("Big Data/csvOutputNum.csv") 
 print(PrepSerieChrono(dataInput,name='Month',by='month'))
-print(PrepSerieChrono(dataInput,name='Week',by='week'))
-
+#print(PrepSerieChrono(dataInput,name='Week',by='week'))
