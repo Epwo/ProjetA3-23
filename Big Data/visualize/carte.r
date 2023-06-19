@@ -207,7 +207,7 @@ map_departement_taux_accidents <- leaflet(limite_dep) %>%
 Sys.setenv(OPENSSL_CONF="/dev/null") #configuration système pour éviter les bug
 
 #capture des cartes et enregistrement au format png
-mapshot(map_region_accidents, file = "Big Data/plots/accident_region.png", selfcontained = TRUE)
-mapshot(map_departement_accidents, file = "Big Data/plots/accident_departement.png", selfcontained = TRUE)
-mapshot(map_region_taux_accident, file = "Big Data/plots/taux_accident_region.png", selfcontained = TRUE)
-mapshot(map_departement_taux_accidents, file = "Big Data/plots/taux_accident_departement.png", selfcontained = TRUE)
+#mapshot(map_region_accidents, file = "Big Data/plots/accident_region.png", selfcontained = TRUE)
+#mapshot(map_departement_accidents, file = "Big Data/plots/accident_departement.png", selfcontained = TRUE)
+#mapshot(map_region_taux_accident, file = "Big Data/plots/taux_accident_region.png", selfcontained = TRUE)
+#mapshot(map_departement_taux_accidents, file = "Big Data/plots/taux_accident_departement.png", selfcontained = TRUE)
