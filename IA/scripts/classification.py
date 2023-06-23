@@ -17,4 +17,5 @@ dfdict['descr_grav'] = pred.tolist()[0]
 
 output_file = "../jsons/requests/classPred.json"
 with open(output_file, 'w') as json_file:
+    print(dfdict)
     json.dump(dfdict, json_file)
