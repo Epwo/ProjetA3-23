@@ -1,2 +1,2 @@
-date,latitude,longitude,descr_cat_veh,descr_agglo,place,descr_dispo_secu
-731.0,43.3,6.08333,0.0,1.0,0.0,14.0
+date,ville,latitude,longitude,descr_cat_veh,descr_agglo,descr_athmo,descr_lum,descr_etat_surf,age,place,descr_dispo_secu
+384.0,5629.0,47.7833,6.98333,0.0,0.0,0.0,1.0,8.0,23.0,0.0,14.0
